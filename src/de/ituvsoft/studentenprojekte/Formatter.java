@@ -1,5 +1,7 @@
 package de.ituvsoft.studentenprojekte;
 
+import java.lang.IllegalArgumentException;
+
 public class Formatter {
 	public static void printf(String s, Object... Arguments) {
 		System.out.println((formatter(s, Arguments)));
@@ -15,17 +17,25 @@ public class Formatter {
 
 		int posBS = 0;
 		while (s.contains("%") && sb.lastIndexOf("%") != posBS - 1 && Arguments.length > i) {
-			if (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\') {
-				posBS = sb.indexOf("%") + 1;
+			char plHalterArt = sb.charAt(sb.indexOf("%", posBS) + 1);
+			if (sb.indexOf("%") != 0) {
+				if (plHalterArt - 2 == '\\') {
+					posBS = sb.indexOf("%") + 1;
 
-			}
-
-			else if (sb.charAt(sb.indexOf("%", posBS) + 1) == 'D') {
+				}
+			} else if (plHalterArt == 'D') {
+				if (!(Arguments[i] instanceof String)) {
+					throw new IllegalArgumentException("Das Datum muss in einem String angegeben werden");
+				}
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, DateConvert.dateConvert(Arguments[i].toString()));
 
 			}
 
-			else if (sb.charAt(sb.indexOf("%", posBS) + 1) == 'f') {
+			else if (plHalterArt == 'f') {
+				if (!(Arguments[i] instanceof Float || Arguments[i] instanceof Double)) {
+					throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Float oder Double übergeben");
+				}
+
 				int nKStellen = Character.getNumericValue(sb.charAt(sb.indexOf("%") + 2));
 				System.out.println(Arguments[i].toString());
 				String dbl = Arguments[i].toString();
@@ -34,18 +44,27 @@ public class Formatter {
 
 			}
 
-			else if (sb.charAt(sb.indexOf("%", posBS) + 1) == 'n') {
+			else if (plHalterArt == 'n') {
+
+				if (!(Arguments[i] instanceof Integer) || !(Arguments[i] instanceof Double)
+						|| !(Arguments[i] instanceof String) || !(Arguments[i] instanceof Float)
+						|| !(Arguments[i] instanceof Short) || !(Arguments[i] instanceof Byte)
+						|| !(Arguments[i] instanceof Long))
+
+				{
+					throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Integer");
+				}
+
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, WholeNumber.numberConvert(Arguments[i].toString()));
 
-			} else if (sb.charAt(sb.indexOf("%", posBS) + 1) == 's') {
+			} else if (plHalterArt == 's') {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, Arguments[i].toString());
 
-			} else if (sb.charAt(sb.indexOf("%", posBS) + 1) == 'S') {
+			} else if (plHalterArt == 'S') {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, BigLetters.blMaker(Arguments[i].toString()));
 
 			} else {
-				return "Der von Ihnen angegebene Platzhalter ist fehlerhaft.";
-
+				throw new IllegalArgumentException("Der angegebene Platzhalter exisitiert nicht");
 			}
 			i++;
 			s = sb.toString();
@@ -57,8 +76,8 @@ public class Formatter {
 				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 2, " ");
 
 			}
-
 		}
+
 		s = sb.toString().replace('\\', ' ');
 
 		while (s.contains("  ")) {

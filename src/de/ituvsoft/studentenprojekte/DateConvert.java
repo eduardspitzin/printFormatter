@@ -5,8 +5,11 @@ public class DateConvert {
 		if (datum.indexOf('.') == 2 && datum.lastIndexOf('.') == 5 && datum.length() == 10) {
 			return datum;
 		}
-		if (datum.indexOf('-') == 2 && datum.lastIndexOf('-') == 5 && datum.length() == 10) {
-			return datum.replace('-', '.');			
+		if (datum.indexOf('-') == 4 && datum.lastIndexOf('-') == 7 && datum.length() == 10) {
+			CharSequence tag = datum.substring(8);
+			CharSequence monat = datum.substring(5, 7);
+			CharSequence jahr = datum.substring(0,4);
+			return datum.join(".", tag, monat, jahr);		
 		}									//		2 0 0 1 1 2 1 4
 											//		0 1 2 3 4 5 6 7
 		if (datum.length() == 8) {			//		1 4 1 2 2 0 0 1
