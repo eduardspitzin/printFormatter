@@ -1,13 +1,41 @@
 package de.ituvsoft.studentenprojekte;
 
-public class DecimalNumber{
+public class DecimalNumber {
+
+	public static String tTrennZeichen(String zahl) {
+
+		StringBuffer zahlB = new StringBuffer(zahl);
+		int j = 1;
+
+		if (zahl.contains(",")) {
+			for (int i = zahl.indexOf(","); i > 0; i--) {
+
+				if (j % 3 == 1 && j != 1) {
+					zahlB.insert(i, '.');
+				}
+				j++;
+			}
+			return zahlB.toString();
+
+		} else {
+			for (int i = zahl.length(); i >= 0; i--) {
+
+				if (j % 3 == 1 && j != 1) {
+					zahlB.insert(i, '.');
+				}
+				j++;
+			}
+			return zahlB.toString();
+		}
+
+	}
 
 	public static String decimalNumber(double rundZahl, int nachStellen) {
 		double value = rundZahl;
 		int n = nachStellen;
 		int rZahl = 1;
 		if (n == 0) {
-			return String.valueOf(Math.round(value));
+			return tTrennZeichen(String.valueOf(Math.round(value)));
 
 		}
 		for (int i = 0; i < n; i++) {
@@ -16,7 +44,7 @@ public class DecimalNumber{
 		}
 
 		value = Math.rint(rZahl * value) / rZahl;
-		return String.valueOf(value);
+		return tTrennZeichen(String.valueOf(value).replace('.', ','));
 
 	}
 
@@ -25,7 +53,7 @@ public class DecimalNumber{
 		int n = nachStellen;
 		int rZahl = 1;
 		if (n == 0) {
-			return String.valueOf(Math.round(value));
+			return tTrennZeichen(String.valueOf(Math.round(value)));
 
 		}
 		for (int i = 0; i < n; i++) {
@@ -34,16 +62,14 @@ public class DecimalNumber{
 		}
 
 		value = (float) (Math.rint(rZahl * value) / rZahl);
-		return String.valueOf(value);
+		return tTrennZeichen(String.valueOf(value).replace('.', ','));
 
 	}
 
 	public static void main(String[] args) {
 
-		System.out.println(decimalNumber(1.0, 3));
-
+		System.out.println(decimalNumber(43453234, 1));
+		// System.out.println(ttrennZeichen("43383954,35786"));
 	}
-
-	
 
 }

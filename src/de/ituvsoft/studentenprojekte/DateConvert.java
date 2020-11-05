@@ -1,23 +1,25 @@
 package de.ituvsoft.studentenprojekte;
-
+import java.lang.IllegalArgumentException;
 public class DateConvert {
+	
+	
 	public static String dateConvert(String datum) {
 		if (datum.indexOf('.') == 2 && datum.lastIndexOf('.') == 5 && datum.length() == 10) {
 			return datum;
 		}
-		if (datum.indexOf('-') == 4 && datum.lastIndexOf('-') == 7 && datum.length() == 10) {
+		else if (datum.indexOf('-') == 4 && datum.lastIndexOf('-') == 7 && datum.length() == 10) {
 			CharSequence tag = datum.substring(8);
 			CharSequence monat = datum.substring(5, 7);
 			CharSequence jahr = datum.substring(0,4);
 			return datum.join(".", tag, monat, jahr);		
 		}									//		2 0 0 1 1 2 1 4
 											//		0 1 2 3 4 5 6 7
-		if (datum.length() == 8) {			//		1 4 1 2 2 0 0 1
+		else if (datum.length() == 8) {			//		1 4 1 2 2 0 0 1
 			boolean mRichtig = Integer.parseInt(datum.substring(4, 6)) > 12;
 			boolean mFalsch = Integer.parseInt(datum.substring(0, 2)) > 12;
 
 			if (!mRichtig && !mFalsch) {
-				return "Unsere Printfunktion funktioniert nur bis ins 13. Jahrhundert";
+				throw new IllegalArgumentException("Formatierung funktioniert nur für Datümer, welche maximal 700 Jahre zurückliegen.");
 
 			}
 
@@ -36,7 +38,7 @@ public class DateConvert {
 			}
 		}
 
-		if (datum.length() > 10) {
+		else if (datum.length() > 10) {
 			String[] Monate = { "Januar", "Februar", "MÃ¤rz", "April", "Mai", "Juni", "Juli", "August", "September",
 					"Oktober", "November", "Dezember" };
 			for (int i = 0; i < 12; i++) {
@@ -48,10 +50,14 @@ public class DateConvert {
 				}
 
 			}
-
+			
 		}
-		return "Das angegebene Format wurde nicht erkannt.";
-
+		else {
+			throw new IllegalArgumentException("Das Datum wurde falsch angegeben und konnte somit nicht konvertiert werden.");
+			
+		}	
+		return "";
+		
 	}
 
 	public static void main(String[] args) {

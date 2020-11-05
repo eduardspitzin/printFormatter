@@ -2,50 +2,42 @@ package de.ituvsoft.studentenprojekte;
 
 public class WholeNumber {
 
-	public static String numberConvert(int number) {
-		int i = number;
-		return String.valueOf(i);
+	public static String numberConvert(Object zahl) {
 
-	}
+		if (zahl instanceof String) {
+			double zahlS = Double.parseDouble((String) zahl);
+			return String.valueOf(Math.round(zahlS));
 
-	public static String numberConvert(long number) {
-		long l = number;
-		return String.valueOf(l);
+		}
 
-	}
+		if (zahl instanceof Integer) {
+			return String.valueOf(zahl);
 
-	public static String numberConvert(String number) {
-		return number;
+		}
+		if (zahl instanceof Double) {
+			return String.valueOf(Math.round((double) zahl));
 
-	}
+		}
+		if (zahl instanceof Long) {
+			return String.valueOf(zahl);
 
-	public static String numberConvert(float number) {
-		int f = (int) Math.round(number);
-		return String.valueOf(f);
+		}
+		if (zahl instanceof Short) {
+			return String.valueOf(zahl);
 
-	}
+		}
+		if (zahl instanceof Byte) {
+			return String.valueOf(zahl);
 
-	public static String numberConvert(short number) {
-		int s = number;
-		return String.valueOf(s);
+		}
+		if (zahl instanceof Float) {
+			return String.valueOf(Math.round((float) zahl));
 
-	}
+		} else {
+			throw new IllegalArgumentException("Bei dem Platzhalter n kannst du nur folgende Datentypen angeben: "
+					+ " Long %n Double %n Integer %n Float %n Short %n String %n Byte ");
 
-	public static String numberConvert(double number) {
-		int d = (int) Math.round(number);
-		return String.valueOf(d);
-
-	}
-
-	public static String numberConvert(byte number) {
-		int i = (int) number;
-		return String.valueOf(i);
-
-	}
-
-	public static void main(String[] args) {
-		byte f = 10;
-		System.out.println(numberConvert(15));
+		}
 
 	}
 

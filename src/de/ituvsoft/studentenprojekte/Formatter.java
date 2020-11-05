@@ -19,11 +19,13 @@ public class Formatter {
 		while (s.contains("%") && sb.lastIndexOf("%") != posBS - 1 && Arguments.length > i) {
 			char plHalterArt = sb.charAt(sb.indexOf("%", posBS) + 1);
 			if (sb.indexOf("%") != 0) {
-				if (plHalterArt - 2 == '\\') {
+				if (plHalterArt -2 == '\\') {
 					posBS = sb.indexOf("%") + 1;
 
 				}
-			} else if (plHalterArt == 'D') {
+		}
+		
+			 if (plHalterArt == 'D') {
 				if (!(Arguments[i] instanceof String)) {
 					throw new IllegalArgumentException("Das Datum muss in einem String angegeben werden");
 				}
@@ -31,7 +33,7 @@ public class Formatter {
 
 			}
 
-			else if (plHalterArt == 'f') {
+			else if (sb.charAt(sb.indexOf("%", posBS) + 1)== 'f') {
 				if (!(Arguments[i] instanceof Float || Arguments[i] instanceof Double)) {
 					throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Float oder Double übergeben");
 				}
@@ -46,21 +48,25 @@ public class Formatter {
 
 			else if (plHalterArt == 'n') {
 
-				if (!(Arguments[i] instanceof Integer) || !(Arguments[i] instanceof Double)
-						|| !(Arguments[i] instanceof String) || !(Arguments[i] instanceof Float)
-						|| !(Arguments[i] instanceof Short) || !(Arguments[i] instanceof Byte)
-						|| !(Arguments[i] instanceof Long))
+				if (Arguments[i] instanceof Integer 
+					|| Arguments[i] instanceof Double 
+					|| Arguments[i] instanceof String 
+					|| Arguments[i] instanceof Float 
+					|| Arguments[i] instanceof Short 
+					|| Arguments[i] instanceof Byte 
+					|| Arguments[i] instanceof Long)
+
 
 				{
-					throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Integer");
+					sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, WholeNumber.numberConvert(Arguments[i]));
 				}
-
-				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, WholeNumber.numberConvert(Arguments[i].toString()));
+				else { throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Integer");
+				}
 
 			} else if (plHalterArt == 's') {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, Arguments[i].toString());
 
-			} else if (plHalterArt == 'S') {
+			} else if (plHalterArt== 'S') {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, BigLetters.blMaker(Arguments[i].toString()));
 
 			} else {
@@ -89,7 +95,7 @@ public class Formatter {
 	}
 
 	public static void main(String[] args) {
-		printf("Hallo zusammen, ich bin %s und \\%s ist funny %D %F", "Hallo", "bin");
+		printf("Hallo ich heisse %s und wurde am %D geboren. Mein Kontostand beträgt %n", "Eduard","14. Dezember 2001",13534.223);
 	}
 
 }
