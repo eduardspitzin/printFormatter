@@ -108,7 +108,7 @@ class ConverterTest {
 	@Test
 	void testBackslash() {
 		String s = f.printf("\\%s blah %n blah \\%D", 5);
-		assertTrue(s.equals("%s blah 5 blah %D"));
+		assertTrue(s.equals(" %s blah 5 blah %D"));
 	}
 	
 	@Test

@@ -18,18 +18,16 @@ public class Formatter {
 		int posBS = 0;
 		while (s.contains("%") && sb.lastIndexOf("%") != posBS - 1 && Arguments.length > i) {
 			char plHalterArt = sb.charAt(sb.indexOf("%", posBS) + 1);
-			if (sb.indexOf("%") != 0) {
-				if (plHalterArt -2 == '\\') {
-					posBS = sb.indexOf("%") + 1;
-
-				}
+			if (sb.indexOf("%") != 0 && (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\')) {				
+					posBS = sb.indexOf("%") + 1;				
 		}
 		
-			 if (plHalterArt == 'D') {
+			else if (plHalterArt == 'D') {
 				if (!(Arguments[i] instanceof String)) {
 					throw new IllegalArgumentException("Das Datum muss in einem String angegeben werden");
 				}
-				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, DateConvert.dateConvert(Arguments[i].toString()));
+				sb.replace(sb.indexOf("%",posBS), sb.indexOf("%", posBS) + 2, DateConvert.dateConvert(Arguments[i].toString()));
+				i++;
 
 			}
 
@@ -42,7 +40,8 @@ public class Formatter {
 				System.out.println(Arguments[i].toString());
 				String dbl = Arguments[i].toString();
 				double zahl = Double.parseDouble(dbl);
-				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 3, DecimalNumber.decimalNumber(zahl, nKStellen));
+				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 3, DecimalNumber.decimalNumber(zahl, nKStellen));
+				i++;
 
 			}
 
@@ -58,14 +57,16 @@ public class Formatter {
 
 
 				{
-					sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, WholeNumber.numberConvert(Arguments[i]));
+					sb.replace(sb.indexOf("%", posBS), sb.indexOf("%",posBS) + 2, WholeNumber.numberConvert(Arguments[i]));
+					i++;
 				}
 				else { throw new IllegalArgumentException("Ganzzahlen dürfen nur von Typ Integer sein");
 				}
 
 			} else if (plHalterArt == 's') {
 				if(Arguments[i] instanceof String) {
-				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, Arguments[i].toString());
+				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 2, Arguments[i].toString());
+				i++;
 				}
 				else {
 					throw new IllegalArgumentException("Strings dürfen nur vom Typ String sein");
@@ -73,7 +74,8 @@ public class Formatter {
 
 			} else if (plHalterArt== 'S') {
 				if (Arguments[i] instanceof String) {
-				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, BigLetters.blMaker(Arguments[i].toString()));
+				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 2, BigLetters.blMaker(Arguments[i].toString()));
+				i++;
 				}
 				else {
 					throw new IllegalArgumentException("Strings dürfen nur vom Typ String sein");
@@ -83,17 +85,19 @@ public class Formatter {
 			} else {
 				throw new IllegalArgumentException("Der angegebene Platzhalter exisitiert nicht");
 			}
-			i++;
+			
 			s = sb.toString();
 		}
-		while (sb.indexOf("%", posBS) != -1) {
+		int r = 0;
+		while (r < s.length() && sb.indexOf("%") != -1) {
 			if (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\') {
 				posBS = sb.indexOf("%") + 1;
+				r++;
 			} else {
 				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 2, " ");
 
 			}
-		}
+	}
 
 		s = sb.toString().replace('\\', ' ');
 
@@ -106,7 +110,7 @@ public class Formatter {
 	}
 
 	public static void main(String[] args) {
-		printf("Hallo ich heisse %s und wurde am %D geboren. Mein Kontostand beträgt %n", "Eduard","14. Dezember 2001",13534.223);
+		System.out.println(printf("%s    hallo  %D", "hallo", "04112020"));
 	}
 
 }
