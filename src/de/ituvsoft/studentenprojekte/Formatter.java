@@ -3,8 +3,8 @@ package de.ituvsoft.studentenprojekte;
 import java.lang.IllegalArgumentException;
 
 public class Formatter {
-	public static void printf(String s, Object... Arguments) {
-		System.out.println((formatter(s, Arguments)));
+	public static String printf(String s, Object... Arguments) {
+		return((formatter(s, Arguments)));
 	}
 
 	public static void printef(String s, Object... Arguments) {
