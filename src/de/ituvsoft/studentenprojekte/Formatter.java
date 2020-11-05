@@ -35,7 +35,7 @@ public class Formatter {
 
 			else if (sb.charAt(sb.indexOf("%", posBS) + 1)== 'f') {
 				if (!(Arguments[i] instanceof Float || Arguments[i] instanceof Double)) {
-					throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Float oder Double übergeben");
+					throw new IllegalArgumentException("Für Ganzzahlen dürfen nur Zahlen vom Typ Float oder Double übergeben werden");
 				}
 
 				int nKStellen = Character.getNumericValue(sb.charAt(sb.indexOf("%") + 2));
@@ -60,14 +60,25 @@ public class Formatter {
 				{
 					sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, WholeNumber.numberConvert(Arguments[i]));
 				}
-				else { throw new IllegalArgumentException("Du darfst nur Zahlen vom Typ Integer");
+				else { throw new IllegalArgumentException("Ganzzahlen dürfen nur von Typ Integer sein");
 				}
 
 			} else if (plHalterArt == 's') {
+				if(Arguments[i] instanceof String) {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, Arguments[i].toString());
+				}
+				else {
+					throw new IllegalArgumentException("Strings dürfen nur vom Typ String sein");
+				}
 
 			} else if (plHalterArt== 'S') {
+				if (Arguments[i] instanceof String) {
 				sb.replace(sb.indexOf("%"), sb.indexOf("%") + 2, BigLetters.blMaker(Arguments[i].toString()));
+				}
+				else {
+					throw new IllegalArgumentException("Strings dürfen nur vom Typ String sein");
+				}
+					
 
 			} else {
 				throw new IllegalArgumentException("Der angegebene Platzhalter exisitiert nicht");
