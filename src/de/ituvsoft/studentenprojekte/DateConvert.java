@@ -48,7 +48,7 @@ public class DateConvert {
 					CharSequence jahr = datum.substring(datum.length() - 4);
 					return datum.join(".", tag, monat, jahr);
 				}
-
+				
 			}
 			
 		}
@@ -56,12 +56,12 @@ public class DateConvert {
 			throw new IllegalArgumentException("Das Datum wurde falsch angegeben und konnte somit nicht konvertiert werden.");
 			
 		}	
-		return "";
+		return "Es ist ein Fehler aufgetreten";
 		
 	}
 
 	public static void main(String[] args) {
-		System.out.println(dateConvert("10101010"));
+		System.out.println(dateConvert("13041503"));
 
 	}
 

@@ -39,17 +39,15 @@ class ConverterTest {
 	@Test
 	void testWrongYear() {
 		Exception e = assertThrows(IllegalArgumentException.class, () -> {
-			f.formatter("%D", "13121000");
+			f.formatter("%D", "11051103"); //11.05.1103
 		});
 		assertTrue(e.getMessage().equals("Formatierung funktioniert nur für Datümer, welche maximal 700 Jahre zurückliegen."));
 	}
 	
 	@Test
 	void testWrongMonth() {
-		Exception e = assertThrows(IllegalArgumentException.class, () -> {
-			f.formatter("%D", "13. Maiz 1920");
-		});
-		assertTrue(e.getMessage().equals("Das Datum wurde falsch angegeben und konnte somit nicht konvertiert werden."));
+		String s = f.formatter("%D","13. TestTest 1920");
+		assertTrue(s.equals("Es ist ein Fehler aufgetreten"));	
 	}
 	
 	@Test
@@ -78,8 +76,8 @@ class ConverterTest {
 	
 	@Test
 	void testValidDezimal() {
-		String s = f.formatter("%f2 %f5 %f3",4.2345, 56.433221, 45678.34566);
-		assertTrue(s.equals("4,23 56,43322 45.678,346"));
+		String s = f.formatter("%f2 %f5 %f3 %f5",4.2345, 56.433221, 45678.34566, 3.25);
+		assertTrue(s.equals("4,23 56,43322 45.678,346 3,25000"));
 	}
 	
 	@Test
