@@ -3,8 +3,8 @@ package de.ituvsoft.studentenprojekte;
 import java.lang.IllegalArgumentException;
 
 public class Formatter {
-	public static String printf(String s, Object... Arguments) {
-		return((formatter(s, Arguments)));
+	public static void printf(String s, Object... Arguments) {
+		System.out.println(formatter(s, Arguments));
 	}
 
 	public static void printef(String s, Object... Arguments) {
@@ -46,22 +46,8 @@ public class Formatter {
 			}
 
 			else if (plHalterArt == 'n') {
-
-				if (Arguments[i] instanceof Integer 
-					|| Arguments[i] instanceof Double 
-					|| Arguments[i] instanceof String 
-					|| Arguments[i] instanceof Float 
-					|| Arguments[i] instanceof Short 
-					|| Arguments[i] instanceof Byte 
-					|| Arguments[i] instanceof Long)
-
-
-				{
 					sb.replace(sb.indexOf("%", posBS), sb.indexOf("%",posBS) + 2, WholeNumber.numberConvert(Arguments[i]));
 					i++;
-				}
-				else { throw new IllegalArgumentException("Ganzzahlen dürfen nur von Typ Integer sein");
-				}
 
 			} else if (plHalterArt == 's') {
 				if(Arguments[i] instanceof String) {
@@ -109,8 +95,6 @@ public class Formatter {
 
 	}
 
-	public static void main(String[] args) {
-		System.out.println(printf("%s    hallo  %D", "hallo", "04112020"));
-	}
+	
 
 }
