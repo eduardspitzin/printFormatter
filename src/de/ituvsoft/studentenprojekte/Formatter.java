@@ -19,7 +19,7 @@ public class Formatter {
 		while (s.contains("%") && sb.lastIndexOf("%") != posBS - 1 && Arguments.length > i) {
 			char plHalterArt = sb.charAt(sb.indexOf("%", posBS) + 1);
 			if (sb.indexOf("%") != 0 && (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\')) {				
-					posBS = sb.indexOf("%") + 1;				
+					posBS = sb.indexOf("%",posBS) + 1;				
 		}
 		
 			else if (plHalterArt == 'D') {
@@ -31,7 +31,7 @@ public class Formatter {
 
 			}
 
-			else if (sb.charAt(sb.indexOf("%", posBS) + 1)== 'f') {
+			else if (plHalterArt== 'f') {
 				if (!(Arguments[i] instanceof Float || Arguments[i] instanceof Double)) {
 					throw new IllegalArgumentException("Für Ganzzahlen dürfen nur Zahlen vom Typ Float oder Double übergeben werden");
 				}
@@ -74,11 +74,10 @@ public class Formatter {
 			
 			s = sb.toString();
 		}
-		int r = 0;
-		while (r < s.length() && sb.indexOf("%") != -1) {
+		while (sb.indexOf("%",posBS) != -1) {
 			if (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\') {
-				posBS = sb.indexOf("%") + 1;
-				r++;
+				posBS = sb.indexOf("%",posBS) + 1;
+
 			} else {
 				sb.replace(sb.indexOf("%", posBS), sb.indexOf("%", posBS) + 2, " ");
 
