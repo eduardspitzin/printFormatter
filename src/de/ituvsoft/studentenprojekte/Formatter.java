@@ -16,7 +16,7 @@ public class Formatter {
 		int i = 0;
 
 		int posBS = 0;
-		while (s.contains("%") && sb.lastIndexOf("%") != posBS - 1 && Arguments.length > i) {
+		while (s.contains("%") && Arguments.length > i) {
 			char plHalterArt = sb.charAt(sb.indexOf("%", posBS) + 1);
 			if (sb.indexOf("%") != 0 && (sb.charAt(sb.indexOf("%", posBS) - 1) == '\\')) {				
 					posBS = sb.indexOf("%",posBS) + 1;				
